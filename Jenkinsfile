@@ -14,7 +14,7 @@ pipeline {
         }
         stage("Checkout from SCM") {
             steps {
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/devaasirvathamsj/gitops-register-app.git'
+                git branch: 'main', credentialsId: 'github-push', url: 'https://github.com/devaasirvathamsj/gitops-register-app.git'
             }
         }
         stage("Update the Deployment Tags") {
