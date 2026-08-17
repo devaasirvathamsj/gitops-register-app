@@ -15,7 +15,7 @@ pipeline {
         }
         stage("Checkout from SCM") {
             steps {
-                git branch: 'main', credentialsId: 'github-push', url: 'https://github.com/devaasirvathamsj/gitops-register-app.git'
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/devaasirvathamsj/gitops-register-app.git'
             }
         }
         stage("Resolve ECR Registry") {
@@ -46,7 +46,7 @@ pipeline {
                    git add deployment.yaml
                    git diff --staged --quiet || git commit -m "Updated Deployment Manifest to tag: ${params.IMAGE_TAG}"
                 """
-                withCredentials([gitUsernamePassword(credentialsId: 'github-push', gitToolName: 'Default')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
                     sh "git push https://github.com/devaasirvathamsj/gitops-register-app.git main"
                 }
             }
