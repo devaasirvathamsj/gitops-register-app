@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: register-app
-          image: 793264560878.dkr.ecr.us-east-1.amazonaws.com/register-app:latest
+          image: 793264560878.dkr.ecr.us-east-1.amazonaws.com/register-app:1.0.0-12
           resources:
             limits:
               memory: "256Mi"
