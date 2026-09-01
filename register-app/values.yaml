@@ -12,3 +12,7 @@ replicaCount: 2
 
 autoscaling:
   enabled: false
+  
+serviceAccount:
+create: false
+name: ""
