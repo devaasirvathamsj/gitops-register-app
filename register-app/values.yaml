@@ -16,3 +16,6 @@ autoscaling:
 serviceAccount:
   create: false
   name: ""
+
+httpRoute:
+  enabled: false
