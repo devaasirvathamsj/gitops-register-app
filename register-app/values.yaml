@@ -1,0 +1,11 @@
+image:
+  repository: placeholder
+  tag: "placeholder"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+
+replicaCount: 2

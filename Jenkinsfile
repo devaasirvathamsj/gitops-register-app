@@ -4,8 +4,9 @@ pipeline {
         string(name: 'IMAGE_TAG', defaultValue: 'latest', description: 'Docker image tag to deploy')
     }
     environment {
-        APP_NAME   = "register-app"
-        AWS_REGION = "us-east-1"
+        APP_NAME       = "register-app"
+        AWS_REGION     = "us-east-1"
+        HELM_CHART_DIR = "register-app"
     }
     stages {
         stage("Cleanup Workspace") {
@@ -29,22 +30,23 @@ pipeline {
                 }
             }
         }
-        stage("Update the Deployment Tags") {
+        stage("Update Helm values.yaml") {
             steps {
                 sh """
-                   cat deployment.yaml
-                   sed -i 's|image: .*|image: ${env.IMAGE_NAME}:${params.IMAGE_TAG}|g' deployment.yaml
-                   cat deployment.yaml
+                   cat ${HELM_CHART_DIR}/values.yaml
+                   sed -i 's|repository: .*|repository: ${env.IMAGE_NAME}|g' ${HELM_CHART_DIR}/values.yaml
+                   sed -i 's|tag: .*|tag: \"${params.IMAGE_TAG}\"|g' ${HELM_CHART_DIR}/values.yaml
+                   cat ${HELM_CHART_DIR}/values.yaml
                 """
             }
         }
-        stage("Push the changed deployment file to Git") {
+        stage("Push the changed values.yaml to Git") {
             steps {
                 sh """
                    git config --global user.name "devaasirvathamsj"
                    git config --global user.email "devaasirvathamsj@gmail.com"
-                   git add deployment.yaml
-                   git diff --staged --quiet || git commit -m "Updated Deployment Manifest to tag: ${params.IMAGE_TAG}"
+                   git add ${HELM_CHART_DIR}/values.yaml
+                   git diff --staged --quiet || git commit -m "Updated Helm values.yaml to tag: ${params.IMAGE_TAG}"
                 """
                 withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
                     sh "git push https://github.com/devaasirvathamsj/gitops-register-app.git main"
