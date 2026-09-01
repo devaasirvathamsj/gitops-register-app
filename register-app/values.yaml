@@ -9,3 +9,6 @@ service:
   targetPort: 8080
 
 replicaCount: 2
+
+autoscaling:
+  enabled: false
