@@ -48,7 +48,7 @@ pipeline {
                    git add ${HELM_CHART_DIR}/values.yaml
                    git diff --staged --quiet || git commit -m "Updated Helm values.yaml to tag: ${params.IMAGE_TAG}"
                 """
-                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                withCredentials([gitUsernamePassword(credentialsId: 'github-token', gitToolName: 'Default')]) {
                     sh "git push https://github.com/devaasirvathamsj/gitops-register-app.git main"
                 }
             }
