@@ -1,6 +1,6 @@
 image:
   repository: 793264560878.dkr.ecr.us-east-1.amazonaws.com/register-app
-  tag: "1.0.0-6"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 service:
